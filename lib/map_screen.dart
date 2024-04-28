@@ -57,29 +57,44 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   void _updateMarker(Position position) {
-    _markers.clear();
-
-    if (_previousPosition != null) {
+    if (_markers.isEmpty) {
       _markers.add(
         Marker(
-          markerId: const MarkerId('previousLocation'),
-          position: LatLng(_previousPosition!.latitude, _previousPosition!.longitude),
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
+          markerId: MarkerId('currentLocation'),
+          position: LatLng(position.latitude, position.longitude),
+          infoWindow: InfoWindow(
+            title: 'My Current Location',
+            snippet: 'Lat: ${position.latitude}, Lng: ${position.longitude}',
+          ),
         ),
       );
-    }
-
-    _markers.add(
-      Marker(
-        markerId: const MarkerId('currentLocation'),
-        position: LatLng(position.latitude, position.longitude),
-        infoWindow: InfoWindow(
-          title: 'My Current Location',
-          snippet: 'Lat: ${position.latitude}, Lng: ${position.longitude}',
+    } else {
+      _markers.removeWhere((marker) => marker.markerId == MarkerId('currentLocation'));
+      _markers.add(
+        Marker(
+          markerId: MarkerId('currentLocation'),
+          position: LatLng(position.latitude, position.longitude),
+          infoWindow: InfoWindow(
+            title: 'My Current Location',
+            snippet: 'Lat: ${position.latitude}, Lng: ${position.longitude}',
+          ),
         ),
-        draggable: true
-      ),
-    );
+      );
+
+      if (_previousPosition != null) {
+        bool previousMarkerExists = _markers.any((marker) => marker.markerId == MarkerId('previousLocation'));
+
+        if (!previousMarkerExists) {
+          _markers.add(
+            Marker(
+              markerId: MarkerId('previousLocation'),
+              position: LatLng(_previousPosition!.latitude, _previousPosition!.longitude),
+              icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
+            ),
+          );
+        }
+      }
+    }
   }
 
   void _updatePolyline(Position position) {
