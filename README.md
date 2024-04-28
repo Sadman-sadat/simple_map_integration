@@ -1,6 +1,6 @@
 # simple_map_integration
 
-A new Flutter project.
+Real Time Location Tracker.
 
 ## Getting Started
 
