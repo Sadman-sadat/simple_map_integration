@@ -1,6 +1,6 @@
 # simple_map_integration
 
-A new Flutter project.
+Ostad Ostad Module 22 Assignment: Real Time Location Tracker.
 
 ## Getting Started
 
