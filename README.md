@@ -1,6 +1,6 @@
 # simple_map_integration
 
-Real Time Location Tracker.
+Ostad Ostad Module 22 Assignment: Real Time Location Tracker.
 
 ## Getting Started
 
